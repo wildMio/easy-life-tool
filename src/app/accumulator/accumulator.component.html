@@ -1,0 +1,55 @@
+<div class="total-section">總計: {{ total }}</div>
+<div class="action-container">
+  <button
+    #addButton
+    mat-icon-button
+    (click)="openOverlay('add')"
+    type="button"
+    cdkOverlayOrigin
+    #trigger="cdkOverlayOrigin"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+  <button
+    #removeButton
+    mat-icon-button
+    type="button"
+    (click)="openOverlay('remove')"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="overlayOutsideClick($event, addButton, removeButton)"
+  (detach)="overlayDetach()"
+>
+  <div class="overlay-container" cdkTrapFocus>
+    <div class="overlay-action-wrapper">
+      <button mat-icon-button type="button" (click)="resetValue()">
+        <mat-icon>restart_alt</mat-icon>
+      </button>
+      <button mat-icon-button type="button" disabled>
+        <mat-icon>{{ operator }}</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="enterRecord()">
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+    <input type="text" class="current-input" [value]="currentValue" />
+    <div class="number-panel">
+      <button
+        *ngFor="let number of numbers"
+        mat-stroked-button
+        type="button"
+        (click)="addNumber(number)"
+      >
+        {{ number }}
+      </button>
+      <button mat-stroked-button type="button" (click)="addPoint()">.</button>
+    </div>
+  </div>
+</ng-template>
+{{ records | json }}

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "easy-life-tools": {
+      "hosting": {
+        "easy-life-tool": [
+          "easy-life-tools"
+        ]
+      }
+    }
+  }
+}
