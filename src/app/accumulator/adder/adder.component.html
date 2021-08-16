@@ -1,0 +1,73 @@
+<button
+  #addButton
+  mat-icon-button
+  (click)="openOverlay('add')"
+  type="button"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  <mat-icon>add</mat-icon>
+</button>
+<button
+  #removeButton
+  mat-icon-button
+  type="button"
+  (click)="openOverlay('remove')"
+>
+  <mat-icon>remove</mat-icon>
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="overlayOutsideClick($event, addButton, removeButton)"
+  (detach)="overlayDetach()"
+>
+  <div class="overlay-container" cdkTrapFocus>
+    <div class="overlay-action-wrapper">
+      <button mat-icon-button type="button" (click)="resetValue()">
+        <mat-icon>restart_alt</mat-icon>
+      </button>
+      <button mat-icon-button type="button" disabled>
+        <mat-icon>{{ operator }}</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="enterRecord()">
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+    <input type="text" class="current-input" [value]="currentValue" />
+    <div class="number-panel">
+      <button
+        *ngFor="let number of numbers"
+        mat-stroked-button
+        type="button"
+        (click)="addNumber(number)"
+      >
+        {{ number }}
+      </button>
+      <button mat-stroked-button type="button" (click)="addPoint()">.</button>
+    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel (expandedChange)="toggleDetail($event)">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="detail-title">進階</mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <div>
+            <mat-form-field>
+              <mat-label>描述</mat-label>
+              <input matInput type="text" autocomplete="" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>日期</mat-label>
+              <input matInput type="text" />
+            </mat-form-field>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</ng-template>

@@ -1,0 +1,27 @@
+.overlay-container {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
+}
+
+.overlay-action-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.number-panel {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  margin: 0.5rem 0;
+}
+
+.detail-title {
+  justify-content: center;
+}
