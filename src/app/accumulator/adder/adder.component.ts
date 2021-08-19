@@ -1,3 +1,4 @@
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import {
   Component,
   OnInit,
@@ -24,6 +25,19 @@ export class AdderComponent {
   detailIsOpen = false;
 
   numbers: NumberType[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  whiteListMap = [
+    ...this.numbers,
+    '.',
+    'Delete',
+    'Backspace',
+    'ArrowLeft',
+    'ArrowUp',
+    'ArrowRight',
+    'ArrowDown',
+    'Tab',
+  ].reduce((map, num) => ({ ...map, [num]: true }), {}) as {
+    [num: string]: true;
+  };
 
   currentValue: string | null = null;
 
@@ -31,7 +45,18 @@ export class AdderComponent {
 
   pointExponential = 1;
 
+  pointRegExp = /\./;
+
   operator: OperatorType = 'add';
+
+  connectedPositions: ConnectedPosition[] = [
+    {
+      originX: 'center',
+      originY: 'bottom',
+      overlayX: 'center',
+      overlayY: 'top',
+    },
+  ];
 
   @Output() add = new EventEmitter<AccumulatorRecord>();
 
@@ -67,6 +92,35 @@ export class AdderComponent {
     this.currentValue = null;
     this.hasPoint = false;
     this.pointExponential = 1;
+  }
+
+  inputKeydown(event: KeyboardEvent) {
+    const { key } = event;
+    console.log(key);
+    if (!this.whiteListMap[key] || (this.hasPoint && key === '.')) {
+      event.preventDefault();
+    }
+    if (key === 'Enter') {
+      this.enterRecord();
+    }
+  }
+
+  inputValue(event: InputEvent, value: string) {
+    console.log(value);
+    let result = value;
+    const { data } = event;
+    if (data === '.' || this.hasPoint) {
+      const [beforePoint, afterPoint] = value.split('.');
+      const shrinkAfterPoint = afterPoint.slice(0, 8);
+      this.hasPoint = true;
+      this.pointExponential = shrinkAfterPoint.length + 1;
+      result = `${beforePoint || '0'}.${shrinkAfterPoint}`;
+    }
+    if (data === null && this.hasPoint && !this.pointRegExp.test(result)) {
+      this.hasPoint = false;
+      this.pointExponential = 1;
+    }
+    this.currentValue = result;
   }
 
   addNumber(number: NumberType) {

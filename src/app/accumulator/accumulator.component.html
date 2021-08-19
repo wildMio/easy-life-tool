@@ -1,5 +1,19 @@
-<div class="total-section">總計: {{ total }}</div>
+<div class="total-section">{{ total }}</div>
 <div class="action-container">
-  <app-adder></app-adder>
+  <app-adder (add)="addRecord($event)"></app-adder>
 </div>
-{{ records | json }}
+
+<div class="table-header-wrapper">
+  <span>數量</span>
+  <span>建立日期</span>
+  <span>描述</span>
+  <span>事件日期</span>
+</div>
+<cdk-virtual-scroll-viewport itemSize="32">
+  <div *cdkVirtualFor="let record of records" class="row">
+    <span>{{ record.number }}</span>
+    <span>{{ record.createdDate | date: "medium" }}</span>
+    <span>{{ record.description }}</span>
+    <span>{{ record.eventDate | date: "medium" }}</span>
+  </div>
+</cdk-virtual-scroll-viewport>

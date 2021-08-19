@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  OnInit,
-} from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AccumulatorRecord } from './model/record.model';
 
 @Component({
@@ -13,14 +7,15 @@ import { AccumulatorRecord } from './model/record.model';
   styleUrls: ['./accumulator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccumulatorComponent implements OnInit {
+export class AccumulatorComponent {
   total = 0;
 
   records: AccumulatorRecord[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.total = 1;
+  addRecord(record: AccumulatorRecord) {
+    this.records = [record, ...this.records];
+    this.total += parseFloat(record.number);
   }
 }

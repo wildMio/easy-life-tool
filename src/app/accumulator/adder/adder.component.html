@@ -1,23 +1,19 @@
-<button
-  #addButton
-  mat-icon-button
-  (click)="openOverlay('add')"
-  type="button"
-  cdkOverlayOrigin
-  #trigger="cdkOverlayOrigin"
->
-  <mat-icon>add</mat-icon>
-</button>
-<button
-  #removeButton
-  mat-icon-button
-  type="button"
-  (click)="openOverlay('remove')"
->
-  <mat-icon>remove</mat-icon>
-</button>
+<div cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <button #addButton mat-icon-button (click)="openOverlay('add')" type="button">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button
+    #removeButton
+    mat-icon-button
+    type="button"
+    (click)="openOverlay('remove')"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+</div>
 <ng-template
   cdkConnectedOverlay
+  [cdkConnectedOverlayPositions]="connectedPositions"
   [cdkConnectedOverlayOrigin]="trigger"
   [cdkConnectedOverlayOpen]="isOpen"
   (overlayOutsideClick)="overlayOutsideClick($event, addButton, removeButton)"
@@ -35,7 +31,16 @@
         <mat-icon>check</mat-icon>
       </button>
     </div>
-    <input type="text" class="current-input" [value]="currentValue" />
+    <input
+      #input
+      type="text"
+      pattern="[0-9]*"
+      inputmode="numeric"
+      class="current-input"
+      [value]="currentValue"
+      (keydown)="inputKeydown($event)"
+      (input)="inputValue($any($event), input.value)"
+    />
     <div class="number-panel">
       <button
         *ngFor="let number of numbers"
