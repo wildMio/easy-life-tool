@@ -1,0 +1,22 @@
+<ng-container *ngIf="displayColumns$ | async as displayColumns">
+  <div class="table-header-wrapper grid">
+    <span *ngFor="let column of displayColumns">{{ column.headerName }}</span>
+  </div>
+  <cdk-virtual-scroll-viewport itemSize="40">
+    <div
+      *cdkVirtualFor="let record of records"
+      class="row grid overflow-hidden"
+    >
+      <span *ngFor="let column of displayColumns">
+        <ng-container [ngSwitch]="column.type">
+          <ng-container *ngSwitchCase="'date'">
+            {{ record | valueGetter: column | date: "medium" }}
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{ record | valueGetter: column }}
+          </ng-container>
+        </ng-container>
+      </span>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</ng-container>

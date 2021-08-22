@@ -1,0 +1,36 @@
+<button
+  #classifyButton
+  mat-button
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (click)="isOpen = true"
+>
+  {{ activeClassify?.label }}
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="overlayOutsideClick($event, classifyButton)"
+  (detach)="overlayDetach()"
+>
+  <div class="overlay-container" cdkTrapFocus cdkTrapFocusAutoCapture>
+    <div class="position-relative">
+      <input
+        type="text"
+        name="search"
+        class="search-input"
+        placeholder="搜尋"
+        cdkFocusInitial
+      />
+      <button type="button" class="search-button position-absolute">
+        <mat-icon class="search-icon">search</mat-icon>
+      </button>
+    </div>
+    <div>
+      <div *ngFor="let classify of classifies">
+        {{ classify.label }}
+      </div>
+    </div>
+  </div>
+</ng-template>

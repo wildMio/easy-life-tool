@@ -1,3 +1,13 @@
+$iconSize: 18px;
+
+.add-button {
+  margin-right: 0.5rem;
+}
+
+.remove-button {
+  margin-left: 0.5rem;
+}
+
 .overlay-container {
   border: solid 1px #ccc;
   border-radius: 5px;
@@ -5,22 +15,31 @@
   padding: 10px;
 }
 
-.overlay-action-wrapper {
-  display: flex;
-  justify-content: space-between;
+.operator-icon {
+  width: $iconSize;
+  height: $iconSize;
+  line-height: $iconSize;
+  font-size: $iconSize;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .current-input {
-  width: 100%;
-  box-sizing: border-box;
   font-size: 1rem;
-  appearance: none;
+  border: 1px solid;
+  padding-left: $iconSize;
 }
 
 .number-panel {
-  display: grid;
   grid-template-columns: repeat(3, auto);
   margin: 0.5rem 0;
+}
+
+.backspace-icon {
+  font-size: $iconSize;
+  width: $iconSize;
+  height: $iconSize;
+  line-height: $iconSize;
 }
 
 .detail-title {

@@ -1,11 +1,18 @@
 <div cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-  <button #addButton mat-icon-button (click)="openOverlay('add')" type="button">
+  <button
+    #addButton
+    mat-icon-button
+    type="button"
+    class="add-button"
+    (click)="openOverlay('add')"
+  >
     <mat-icon>add</mat-icon>
   </button>
   <button
     #removeButton
     mat-icon-button
     type="button"
+    class="remove-button"
     (click)="openOverlay('remove')"
   >
     <mat-icon>remove</mat-icon>
@@ -19,29 +26,37 @@
   (overlayOutsideClick)="overlayOutsideClick($event, addButton, removeButton)"
   (detach)="overlayDetach()"
 >
-  <div class="overlay-container" cdkTrapFocus>
-    <div class="overlay-action-wrapper">
-      <button mat-icon-button type="button" (click)="resetValue()">
+  <div class="overlay-container" cdkTrapFocus cdkTrapFocusAutoCapture>
+    <div class="flex justify-between">
+      <button
+        mat-icon-button
+        type="button"
+        cdkFocusInitial
+        (click)="resetValue()"
+      >
         <mat-icon>restart_alt</mat-icon>
-      </button>
-      <button mat-icon-button type="button" disabled>
-        <mat-icon>{{ operator }}</mat-icon>
       </button>
       <button mat-icon-button type="button" (click)="enterRecord()">
         <mat-icon>check</mat-icon>
       </button>
     </div>
-    <input
-      #input
-      type="text"
-      pattern="[0-9]*"
-      inputmode="numeric"
-      class="current-input"
-      [value]="currentValue"
-      (keydown)="inputKeydown($event)"
-      (input)="inputValue($any($event), input.value)"
-    />
-    <div class="number-panel">
+    <div class="position-relative">
+      <mat-icon class="operator-icon user-select-none position-absolute">{{
+        operator
+      }}</mat-icon>
+      <input
+        #numberInput
+        type="text"
+        name="number"
+        pattern="[0-9]*"
+        inputmode="numeric"
+        class="current-input border-box width-100"
+        [value]="currentValue"
+        (keydown)="inputKeydown($event)"
+        (input)="inputValue($any($event), numberInput.value)"
+      />
+    </div>
+    <div class="number-panel grid">
       <button
         *ngFor="let number of numbers"
         mat-stroked-button
@@ -51,6 +66,9 @@
         {{ number }}
       </button>
       <button mat-stroked-button type="button" (click)="addPoint()">.</button>
+      <button mat-stroked-button type="button" (click)="backspace()">
+        <mat-icon class="backspace-icon">backspace</mat-icon>
+      </button>
     </div>
 
     <mat-accordion>
@@ -62,7 +80,14 @@
           <div>
             <mat-form-field>
               <mat-label>描述</mat-label>
-              <input matInput type="text" autocomplete="" />
+              <input
+                #descriptionInput
+                matInput
+                type="text"
+                name="description"
+                [value]="description"
+                (input)="description = descriptionInput.value"
+              />
             </mat-form-field>
           </div>
           <div>

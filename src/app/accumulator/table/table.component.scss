@@ -1,0 +1,16 @@
+:host {
+  grid-template-rows: auto 1fr;
+}
+
+.table-header-wrapper,
+.row {
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  height: 40px;
+  span {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+  }
+}

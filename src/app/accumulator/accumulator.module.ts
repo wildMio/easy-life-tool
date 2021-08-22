@@ -12,9 +12,22 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ClassifyComponent } from './classify/classify.component';
+import { TunerComponent } from './tuner/tuner.component';
+import { TableComponent } from './table/table.component';
+import { ValueGetterPipe } from './table/pipe/value-getter.pipe';
 
 @NgModule({
-  declarations: [AccumulatorComponent, AdderComponent],
+  declarations: [
+    AccumulatorComponent,
+    AdderComponent,
+    ClassifyComponent,
+    TunerComponent,
+    TableComponent,
+    ValueGetterPipe,
+  ],
   imports: [
     CommonModule,
     AccumulatorRoutingModule,
@@ -23,9 +36,11 @@ import { MatInputModule } from '@angular/material/input';
     OverlayModule,
     ScrollingModule,
     A11yModule,
+    DragDropModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCheckboxModule,
   ],
 })
 export class AccumulatorModule {}

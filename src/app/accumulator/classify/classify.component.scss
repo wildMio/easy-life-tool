@@ -1,0 +1,33 @@
+$searchSize: 22px;
+
+.overlay-container {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
+}
+
+.search-input {
+  font-size: 1rem;
+  border: 1px solid;
+  padding-right: $searchSize;
+}
+
+.search-button {
+  top: 0;
+  right: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  height: $searchSize;
+  border-left: 1px solid;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.search-icon {
+  width: $searchSize;
+  height: $searchSize;
+  line-height: $searchSize;
+  font-size: $searchSize;
+}

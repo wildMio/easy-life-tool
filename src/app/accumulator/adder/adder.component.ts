@@ -1,7 +1,6 @@
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
@@ -40,6 +39,10 @@ export class AdderComponent {
   };
 
   currentValue: string | null = null;
+
+  description: string = '';
+
+  eventDate?: string;
 
   hasPoint = false;
 
@@ -90,13 +93,13 @@ export class AdderComponent {
 
   resetValue() {
     this.currentValue = null;
+    this.description = '';
     this.hasPoint = false;
     this.pointExponential = 1;
   }
 
   inputKeydown(event: KeyboardEvent) {
     const { key } = event;
-    console.log(key);
     if (!this.whiteListMap[key] || (this.hasPoint && key === '.')) {
       event.preventDefault();
     }
@@ -105,11 +108,10 @@ export class AdderComponent {
     }
   }
 
-  inputValue(event: InputEvent, value: string) {
-    console.log(value);
+  inputValue(event: { data: string | null }, value: string) {
     let result = value;
     const { data } = event;
-    if (data === '.' || this.hasPoint) {
+    if (data === '.' || (this.hasPoint && data !== null)) {
       const [beforePoint, afterPoint] = value.split('.');
       const shrinkAfterPoint = afterPoint.slice(0, 8);
       this.hasPoint = true;
@@ -145,11 +147,19 @@ export class AdderComponent {
     }
   }
 
+  backspace() {
+    this.inputValue({ data: null }, this.currentValue?.slice(0, -1) ?? '');
+  }
+
   enterRecord() {
-    if (this.currentValue) {
+    const number = this.currentValue && parseFloat(this.currentValue);
+    if (number) {
+      const sign = this.operator === 'remove' ? '-' : '';
       this.add.emit({
-        number: this.currentValue,
+        number: `${sign}${number}`,
         createdDate: new Date().toISOString(),
+        description: this.description,
+        eventDate: this.eventDate,
       });
       this.resetValue();
     }
