@@ -1,11 +1,8 @@
 $iconSize: 18px;
 
-.add-button {
-  margin-right: 0.5rem;
-}
-
-.remove-button {
-  margin-left: 0.5rem;
+.trigger-wrapper {
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .overlay-container {
