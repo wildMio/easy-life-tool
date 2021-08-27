@@ -1,18 +1,15 @@
-<div cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-  <button
-    #addButton
-    mat-icon-button
-    type="button"
-    class="add-button"
-    (click)="openOverlay('add')"
-  >
+<div
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  class="trigger-wrapper flex justify-center"
+>
+  <button #addButton mat-icon-button type="button" (click)="openOverlay('add')">
     <mat-icon>add</mat-icon>
   </button>
   <button
     #removeButton
     mat-icon-button
     type="button"
-    class="remove-button"
     (click)="openOverlay('remove')"
   >
     <mat-icon>remove</mat-icon>
