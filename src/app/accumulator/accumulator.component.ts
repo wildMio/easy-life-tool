@@ -1,7 +1,27 @@
-import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { BehaviorSubject, combineLatest, forkJoin, of, Subject } from 'rxjs';
+import {
+  auditTime,
+  concatMap,
+  concatMapTo,
+  map,
+  mapTo,
+  switchMap,
+  switchMapTo,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
+import { uuid } from '../util/uuid';
 import { Classify } from './model/classify.model';
 import { Column } from './model/column';
 import { AccumulatorRecord } from './model/record.model';
+import { AccumulatorIdbService } from './service/accumulator-idb.service';
 
 @Component({
   selector: 'app-accumulator',
@@ -9,12 +29,8 @@ import { AccumulatorRecord } from './model/record.model';
   styleUrls: ['./accumulator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccumulatorComponent {
+export class AccumulatorComponent implements OnInit, OnDestroy {
   @HostBinding('class') class = 'grid height-100';
-
-  total = 0;
-
-  records: AccumulatorRecord[] = [];
 
   columns: Column[] = [
     {
@@ -47,14 +63,87 @@ export class AccumulatorComponent {
     },
   ];
 
-  activeClassify: Classify = { label: '預設' };
+  readonly classifies$ = new BehaviorSubject<Classify[]>([]);
+  readonly activeClassifyCode$ = new BehaviorSubject<string>('');
+  readonly activeClassify$ = combineLatest([
+    this.classifies$,
+    this.activeClassifyCode$,
+  ]).pipe(
+    auditTime(0),
+    map(([classifies, activeClassifyCode]) =>
+      classifies.find(
+        (classify) => classify.classifyCode === activeClassifyCode
+      )
+    )
+  );
 
-  classifies: Classify[] = [this.activeClassify];
+  readonly records$ = new BehaviorSubject<AccumulatorRecord[]>([]);
 
-  constructor() {}
+  readonly total$ = new BehaviorSubject<number>(0);
 
-  addRecord(record: AccumulatorRecord) {
-    this.records = [record, ...this.records];
-    this.total += parseFloat(record.number);
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(private readonly idbService: AccumulatorIdbService) {}
+
+  ngOnInit() {
+    this.idbService
+      .getClassifies()
+      .pipe(
+        concatMap((classifies) => {
+          if (!classifies.length) {
+            const classifyCode = uuid();
+            const classify = { label: '預設', classifyCode };
+            return forkJoin([
+              this.idbService.addClassify(classify),
+              this.idbService.changeActiveClassify(classifyCode),
+            ]).pipe(mapTo([classify]));
+          }
+          return of(classifies);
+        }),
+        tap((classifies) => this.classifies$.next(classifies)),
+        concatMapTo(this.idbService.getActiveClassifyCode()),
+        tap((activeClassifyCode) => {
+          this.activeClassifyCode$.next(activeClassifyCode ?? '');
+        }),
+        concatMap((activeClassifyCode) =>
+          this.idbService.getTotalByClassifyCode(activeClassifyCode).pipe(
+            tap((total) => this.total$.next(total ?? 0)),
+            mapTo(activeClassifyCode)
+          )
+        ),
+        concatMap((activeClassifyCode) =>
+          this.idbService
+            .getAccumulatorRecords()
+            .pipe(
+              map((accumulatorRecords) =>
+                accumulatorRecords
+                  .filter(
+                    (record) => record.classifyCode === activeClassifyCode
+                  )
+                  .reverse()
+              )
+            )
+        ),
+        tap((accumulatorRecords) => this.records$.next(accumulatorRecords)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  addRecord(record: Omit<AccumulatorRecord, 'classifyCode'>) {
+    const classifyCode = this.activeClassifyCode$.getValue();
+    const result = { ...record, classifyCode };
+    this.records$.next([result, ...this.records$.getValue()]);
+    const total = this.total$.getValue() + parseFloat(record.number);
+    this.total$.next(total);
+    forkJoin([
+      this.idbService.addAccumulatorRecord(result),
+      this.idbService.changeTotalByClassifyCode(classifyCode, total),
+    ]).subscribe();
   }
 }

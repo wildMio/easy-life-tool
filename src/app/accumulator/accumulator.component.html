@@ -1,10 +1,10 @@
-<div class="total-section flex-center border-box">{{ total }}</div>
+<div class="total-section flex-center border-box">{{ total$ | async }}</div>
 <div class="action-container border-box grid items-center">
   <app-classify
-    [activeClassify]="activeClassify"
-    [classifies]="classifies"
+    [activeClassify]="activeClassify$ | async"
+    [classifies]="classifies$ | async"
   ></app-classify>
   <app-adder class="adder" (add)="addRecord($event)"></app-adder>
   <app-tuner class="tuner" [(columns)]="columns"></app-tuner>
 </div>
-<app-table [columns]="columns" [records]="records"></app-table>
+<app-table [columns]="columns" [records]="records$ | async"></app-table>

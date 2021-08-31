@@ -18,7 +18,7 @@ import { AccumulatorRecord } from '../model/record.model';
 export class TableComponent {
   @HostBinding('class') class = 'grid height-100';
 
-  @Input() records: AccumulatorRecord[] = [];
+  @Input() records: AccumulatorRecord[] | null = [];
 
   columns$ = new BehaviorSubject<Column[]>([]);
   displayColumns$ = this.columns$.pipe(
