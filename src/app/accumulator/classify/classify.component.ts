@@ -9,8 +9,8 @@ import { Classify } from '../model/classify.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClassifyComponent {
-  @Input() activeClassify?: Classify;
-  @Input() classifies: Classify[] = [];
+  @Input() activeClassify?: Classify | null;
+  @Input() classifies: Classify[] | null = [];
 
   isOpen = false;
 

@@ -1,6 +1,7 @@
 export interface AccumulatorRecord {
   number: string;
-  createdDate: string;
+  createdDate: Date;
   description?: string;
-  eventDate?: string;
+  eventDate?: Date;
+  classifyCode: string;
 }

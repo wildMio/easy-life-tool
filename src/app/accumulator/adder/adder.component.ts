@@ -42,7 +42,7 @@ export class AdderComponent {
 
   description: string = '';
 
-  eventDate?: string;
+  eventDate?: Date;
 
   hasPoint = false;
 
@@ -61,7 +61,7 @@ export class AdderComponent {
     },
   ];
 
-  @Output() add = new EventEmitter<AccumulatorRecord>();
+  @Output() add = new EventEmitter<Omit<AccumulatorRecord, 'classifyCode'>>();
 
   constructor() {}
 
@@ -157,7 +157,7 @@ export class AdderComponent {
       const sign = this.operator === 'remove' ? '-' : '';
       this.add.emit({
         number: `${sign}${number}`,
-        createdDate: new Date().toISOString(),
+        createdDate: new Date(),
         description: this.description,
         eventDate: this.eventDate,
       });
