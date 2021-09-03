@@ -81,6 +81,8 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
 
   readonly total$ = new BehaviorSubject<number>(0);
 
+  selectable = false;
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(private readonly idbService: AccumulatorIdbService) {}

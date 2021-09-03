@@ -1,12 +1,19 @@
 <ng-container *ngIf="displayColumns$ | async as displayColumns">
-  <div class="table-header-wrapper grid">
+  <div class="table-header-wrapper grid" [class.selectable]="selectable">
+    <span *ngIf="selectable" class="checkbox justify-center">
+      <mat-checkbox color="primary"></mat-checkbox>
+    </span>
     <span *ngFor="let column of displayColumns">{{ column.headerName }}</span>
   </div>
   <cdk-virtual-scroll-viewport itemSize="40">
     <div
       *cdkVirtualFor="let record of records"
       class="row grid overflow-hidden"
+      [class.selectable]="selectable"
     >
+      <span *ngIf="selectable" class="checkbox justify-center">
+        <mat-checkbox color="primary"></mat-checkbox
+      ></span>
       <span *ngFor="let column of displayColumns">
         <ng-container [ngSwitch]="column.type">
           <ng-container *ngSwitchCase="'date'">

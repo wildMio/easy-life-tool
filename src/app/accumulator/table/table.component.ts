@@ -34,5 +34,8 @@ export class TableComponent {
   }
   private _columns: Column[] = [];
 
+  @Input() selectable = false;
+  // @Input() selectedItems: AccumulatorRecord[];
+
   constructor() {}
 }
