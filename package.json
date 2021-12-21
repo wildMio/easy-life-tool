@@ -25,12 +25,13 @@
     "@angular/service-worker": "~13.1.1",
     "eslint-config-prettier": "^8.3.0",
     "firebase": "^9.6.1",
-    "idb": "^6.1.2",
-    "rxjs": "~6.6.0",
+    "idb": "^7.0.0",
+    "rxjs": "^7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "0.1301.2",
     "@angular-devkit/build-angular": "~13.1.2",
     "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
@@ -44,20 +45,19 @@
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
     "eslint": "^7.26.0",
+    "firebase-tools": "^8.0.0 || ^9.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.8.0",
+    "jsonc-parser": "^3.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "prettier": "^2.3.2",
-    "typescript": "~4.5.4",
-    "@angular-devkit/architect": "0.1301.2",
-    "firebase-tools": "^8.0.0 || ^9.0.0",
-    "fuzzy": "^0.1.3",
-    "inquirer": "^6.2.2",
-    "inquirer-autocomplete-prompt": "^1.0.1",
     "open": "^7.0.3",
-    "jsonc-parser": "^3.0.0"
+    "prettier": "^2.3.2",
+    "typescript": "~4.5.4"
   }
 }
