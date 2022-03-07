@@ -5,6 +5,21 @@
     [classifies]="classifies$ | async"
   ></app-classify>
   <app-adder class="adder" (add)="addRecord($event)"></app-adder>
-  <app-tuner class="tuner" [(columns)]="columns"></app-tuner>
+  <app-tuner
+    class="tuner"
+    [(columns)]="columns"
+    [(selectable)]="selectable"
+  ></app-tuner>
+  <div *ngIf="selectable">
+    <button mat-icon-button (click)="deleteSelectedRecords()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </div>
 </div>
-<app-table [columns]="columns" [records]="records$ | async"></app-table>
+<app-table
+  [columns]="columns"
+  [records]="records$ | async"
+  [selectable]="selectable"
+  [selectedItems]="selectedItems$ | async"
+  (selectItems)="selectedItems$.next($event)"
+></app-table>

@@ -23,6 +23,10 @@ export class TunerComponent {
 
   @Output() columnsChange = new EventEmitter<Column[]>();
 
+  @Input() selectable: boolean = false;
+
+  @Output() selectableChange = new EventEmitter<boolean>();
+
   constructor() {}
 
   overlayOutsideClick(event: MouseEvent, tuneButton: MatButton) {

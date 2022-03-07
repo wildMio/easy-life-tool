@@ -4,6 +4,13 @@
 
 .table-header-wrapper,
 .row {
+  &.selectable {
+    grid-template-columns: 40px;
+    grid-template-areas: "checkbox";
+    > .checkbox {
+      grid-area: checkbox;
+    }
+  }
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   height: 40px;

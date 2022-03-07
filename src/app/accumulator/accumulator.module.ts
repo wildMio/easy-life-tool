@@ -18,6 +18,7 @@ import { ClassifyComponent } from './classify/classify.component';
 import { TunerComponent } from './tuner/tuner.component';
 import { TableComponent } from './table/table.component';
 import { ValueGetterPipe } from './table/pipe/value-getter.pipe';
+import { ExistModule } from '../pipe/exist/exist.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ValueGetterPipe } from './table/pipe/value-getter.pipe';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    ExistModule,
   ],
 })
 export class AccumulatorModule {}

@@ -16,6 +16,14 @@
 >
   <div class="overlay-container">
     <div>欄位設定:</div>
+    <div class="box flex justify-between items-center">
+      <mat-checkbox
+        color="warn"
+        [checked]="selectable"
+        (change)="selectableChange.emit($event.checked)"
+        >勾選功能</mat-checkbox
+      >
+    </div>
     <div
       #dropContainer
       cdkDropList

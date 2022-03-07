@@ -98,6 +98,10 @@ export class AccumulatorIdbService {
     return this.wrapAction((db) => db.add('accumulators', record));
   }
 
+  removeAccumulatorRecord(recordId: string) {
+    return this.wrapAction((db) => db.delete('accumulators', recordId));
+  }
+
   getAccumulatorRecords() {
     return this.wrapAction((db) =>
       db.getAllFromIndex('accumulators', 'by-date')
