@@ -83,6 +83,8 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
 
   selectable = false;
 
+  selectedItems$ = new BehaviorSubject<AccumulatorRecord[]>([]);
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(private readonly idbService: AccumulatorIdbService) {}
@@ -140,12 +142,39 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
   addRecord(record: Omit<AccumulatorRecord, 'classifyCode'>) {
     const classifyCode = this.activeClassifyCode$.getValue();
     const result = { ...record, classifyCode };
-    this.records$.next([result, ...this.records$.getValue()]);
     const total = this.total$.getValue() + parseFloat(record.number);
     this.total$.next(total);
     forkJoin([
       this.idbService.addAccumulatorRecord(result),
       this.idbService.changeTotalByClassifyCode(classifyCode, total),
-    ]).subscribe();
+    ]).subscribe({
+      next: ([id]) => {
+        result.id = id;
+        this.records$.next([result, ...this.records$.getValue()]);
+      },
+    });
+  }
+
+  deleteSelectedRecords() {
+    const selectedItems = this.selectedItems$.getValue();
+    const selectedItemSet = new Set(selectedItems);
+    this.records$.next(
+      this.records$.getValue().filter((record) => !selectedItemSet.has(record))
+    );
+    const classifyCode = this.activeClassifyCode$.getValue();
+    const total =
+      this.total$.getValue() -
+      selectedItems.reduce((acc, { number }) => acc + parseFloat(number), 0);
+    this.total$.next(total);
+    forkJoin([
+      ...selectedItems.map((record) =>
+        this.idbService.removeAccumulatorRecord(record.id!)
+      ),
+      this.idbService.changeTotalByClassifyCode(classifyCode, total),
+    ]).subscribe({
+      next: () => {
+        this.selectedItems$.next([]);
+      },
+    });
   }
 }

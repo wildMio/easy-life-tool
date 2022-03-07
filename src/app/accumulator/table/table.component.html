@@ -1,7 +1,11 @@
 <ng-container *ngIf="displayColumns$ | async as displayColumns">
   <div class="table-header-wrapper grid" [class.selectable]="selectable">
     <span *ngIf="selectable" class="checkbox justify-center">
-      <mat-checkbox color="primary"></mat-checkbox>
+      <mat-checkbox
+        color="primary"
+        [checked]="(isSelectedAll$ | async)!"
+        (change)="selectAll($event)"
+      ></mat-checkbox>
     </span>
     <span *ngFor="let column of displayColumns">{{ column.headerName }}</span>
   </div>
@@ -12,7 +16,11 @@
       [class.selectable]="selectable"
     >
       <span *ngIf="selectable" class="checkbox justify-center">
-        <mat-checkbox color="primary"></mat-checkbox
+        <mat-checkbox
+          color="primary"
+          [checked]="selectedItemSet$ | async | exist: record"
+          (change)="selectRecord($event, record)"
+        ></mat-checkbox
       ></span>
       <span *ngFor="let column of displayColumns">
         <ng-container [ngSwitch]="column.type">
