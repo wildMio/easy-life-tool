@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { AppPwaService } from './service/app-pwa.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,9 +13,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
   title = 'easy-life-tool';
 
+  showInstallPromotion$ = this.appPwaService.showInstallPromotion$;
+
   constructor(
     private readonly matIconRegistry: MatIconRegistry,
-    private readonly domSanitizer: DomSanitizer
+    private readonly domSanitizer: DomSanitizer,
+    private readonly appPwaService: AppPwaService
   ) {}
 
   ngOnInit() {
@@ -24,5 +29,10 @@ export class AppComponent implements OnInit {
           )
         : null;
     });
+
+    this.appPwaService.interceptDefaultInstall();
+  }
+  installPromotion() {
+    this.appPwaService.installPromotion();
   }
 }

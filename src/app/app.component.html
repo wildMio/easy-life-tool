@@ -1,1 +1,12 @@
 <router-outlet></router-outlet>
+
+<button
+  *ngIf="showInstallPromotion$ | async"
+  mat-icon-button
+  (click)="installPromotion()"
+  matTooltip="Install"
+  matTooltipPosition="left"
+  class="install-button top-0 right-0 opacity-70 hover:opacity-100 focus:opacity-100"
+>
+  <mat-icon>install_desktop</mat-icon>
+</button>
