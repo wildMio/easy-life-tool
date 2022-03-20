@@ -4,9 +4,18 @@
   *ngIf="showInstallPromotion$ | async"
   mat-icon-button
   (click)="installPromotion()"
-  matTooltip="Install"
+  matTooltip="安裝"
   matTooltipPosition="left"
   class="install-button top-0 right-0 opacity-70 hover:opacity-100 focus:opacity-100"
 >
   <mat-icon>install_desktop</mat-icon>
 </button>
+
+<div
+  *ngIf="showUpdatePanel$ | async"
+  class="absolute bottom-4 left-1/2 translate-x-[-50%] max-w-sm w-[90%] p-2 flex items-center gap-4 rounded bg-[#333]"
+>
+  <span class="mi-end-auto text-slate-200">有可用更新</span>
+  <button mat-flat-button color="primary" (click)="reloadPage()">更新</button>
+  <button mat-flat-button color="warn" (click)="dismissUpdate()">忽略</button>
+</div>
