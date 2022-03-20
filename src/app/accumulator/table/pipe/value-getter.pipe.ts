@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { Column } from '../../model/column';
 import { AccumulatorRecord } from '../../model/record.model';
 

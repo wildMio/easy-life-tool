@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
+
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
-import { from, Observable, of } from 'rxjs';
-import { concatMap, retry, shareReplay } from 'rxjs/operators';
-import { IDB_VERSION_TOKEN } from 'src/app/service/idb-version.token';
+import { from, of } from 'rxjs';
+import { concatMap, shareReplay } from 'rxjs/operators';
+
 import { Classify } from '../model/classify.model';
 import { AccumulatorRecord } from '../model/record.model';
+import { IDB_VERSION_TOKEN } from 'src/app/service/idb-version.token';
 
 export interface AccumulatorDB extends DBSchema {
   'active-classify': {
@@ -98,8 +100,10 @@ export class AccumulatorIdbService {
     return this.wrapAction((db) => db.add('accumulators', record));
   }
 
-  removeAccumulatorRecord(recordId: string) {
-    return this.wrapAction((db) => db.delete('accumulators', recordId));
+  removeAccumulatorRecord(recordId?: string) {
+    return recordId
+      ? this.wrapAction((db) => db.delete('accumulators', recordId))
+      : of('');
   }
 
   getAccumulatorRecords() {

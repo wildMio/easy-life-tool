@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+
 import { Column } from '../model/column';
 
 @Component({
@@ -23,11 +24,9 @@ export class TunerComponent {
 
   @Output() columnsChange = new EventEmitter<Column[]>();
 
-  @Input() selectable: boolean = false;
+  @Input() selectable = false;
 
   @Output() selectableChange = new EventEmitter<boolean>();
-
-  constructor() {}
 
   overlayOutsideClick(event: MouseEvent, tuneButton: MatButton) {
     const target = event.target as HTMLElement;

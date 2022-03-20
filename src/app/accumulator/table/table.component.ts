@@ -4,12 +4,13 @@ import {
   Input,
   HostBinding,
   Output,
-  EventEmitter,
   OnDestroy,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { auditTime, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
+import { auditTime, map, shareReplay, takeUntil } from 'rxjs/operators';
+
 import { Column } from '../model/column';
 import { AccumulatorRecord } from '../model/record.model';
 
@@ -69,8 +70,6 @@ export class TableComponent implements OnDestroy {
         !!records?.length && records.length === selectedItems?.length
     )
   );
-
-  constructor() {}
 
   ngOnDestroy(): void {
     this.destroy$.next();

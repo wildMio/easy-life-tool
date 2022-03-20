@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+
 import { BehaviorSubject, map } from 'rxjs';
-import { InputToSubject } from 'src/app/util/input-to-subject';
+
 import { Classify } from '../model/classify.model';
+import { InputToSubject } from 'src/app/util/input-to-subject';
 
 @Component({
   selector: 'app-classify',
@@ -24,8 +26,6 @@ export class ClassifyComponent {
   filterIcon$ = this.filterOn$.pipe(
     map((on) => (on ? 'filter_list' : 'filter_list_off'))
   );
-
-  constructor() {}
 
   toggleFilter() {
     this.filterOn$.next(!this.filterOn$.getValue());

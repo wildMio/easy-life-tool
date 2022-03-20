@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { DBSchema, IDBPDatabase, openDB, StoreNames } from 'idb';
+
+import { IDBPDatabase, openDB, StoreNames } from 'idb';
 import { from, Observable } from 'rxjs';
+
 import { IDB_VERSION_TOKEN } from './idb-version.token';
 
 @Injectable({

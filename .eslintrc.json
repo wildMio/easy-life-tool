@@ -9,11 +9,15 @@
         "createDefaultProgram": true
       },
       "extends": [
+        "eslint:recommended",
         "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "prettier"
       ],
+      "plugins": ["eslint-plugin-import"],
       "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -29,7 +33,41 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "import/order": [
+          "error",
+          {
+            "newlines-between": "always",
+            "groups": [
+              "builtin",
+              "external",
+              ["internal", "index", "sibling", "parent", "object", "type"]
+            ],
+            "pathGroups": [
+              {
+                "pattern": "@angular/**",
+                "group": "builtin"
+              },
+              {
+                "pattern": "src/**",
+                "group": "internal"
+              },
+              {
+                "pattern": "**",
+                "group": "external"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": [
+              "index",
+              "sibling",
+              "parent",
+              "object",
+              "type"
+            ],
+            "alphabetize": { "order": "asc", "caseInsensitive": true }
+          }
+        ],
+        "import/newline-after-import": ["error", { "count": 1 }]
       }
     },
     {

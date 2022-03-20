@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+
 import { BehaviorSubject, combineLatest, forkJoin, of, Subject } from 'rxjs';
 import {
   auditTime,
@@ -12,11 +13,10 @@ import {
   concatMapTo,
   map,
   mapTo,
-  switchMap,
-  switchMapTo,
   takeUntil,
   tap,
 } from 'rxjs/operators';
+
 import { uuid } from '../util/uuid';
 import { Classify } from './model/classify.model';
 import { Column } from './model/column';
@@ -168,7 +168,7 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
     this.total$.next(total);
     forkJoin([
       ...selectedItems.map((record) =>
-        this.idbService.removeAccumulatorRecord(record.id!)
+        this.idbService.removeAccumulatorRecord(record.id)
       ),
       this.idbService.changeTotalByClassifyCode(classifyCode, total),
     ]).subscribe({

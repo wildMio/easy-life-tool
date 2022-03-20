@@ -6,6 +6,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+
 import { AccumulatorRecord } from '../model/record.model';
 
 export type NumberType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0;
@@ -40,7 +41,7 @@ export class AdderComponent {
 
   currentValue: string | null = null;
 
-  description: string = '';
+  description = '';
 
   eventDate?: Date;
 
@@ -62,8 +63,6 @@ export class AdderComponent {
   ];
 
   @Output() add = new EventEmitter<Omit<AccumulatorRecord, 'classifyCode'>>();
-
-  constructor() {}
 
   openOverlay(type: OperatorType) {
     this.isOpen = true;
