@@ -15,17 +15,23 @@
   (detach)="overlayDetach()"
 >
   <div
-    class="p-2.5 bg-white rounded border border-[#ccc]"
+    class="p-2.5 bg-white rounded border border-[#ccc] grid gap-2"
     cdkTrapFocus
     cdkTrapFocusAutoCapture
   >
+    <div class="flex justify-between items-center">
+      <span>分類:</span>
+      <button mat-stroked-button cdkFocusInitial (click)="addClassify.next()">
+        新增分類
+      </button>
+    </div>
     <div class="relative">
       <input
         type="text"
         name="search"
         class="search-input border border-black"
         placeholder="過濾"
-        cdkFocusInitial
+        (input)="updateFilterCondition($event)"
       />
       <button
         type="button"
@@ -36,9 +42,28 @@
       </button>
     </div>
     <div class="grid gap-2">
-      <div *ngFor="let classify of classifies">
-        {{ classify.label }}
+      <div *ngIf="activeClassify" class="flex">
+        <button mat-button color="primary" class="classify-label-button">
+          {{ activeClassify.label }}
+        </button>
+        <button mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
       </div>
+      <ng-container *ngIf="candidateClassifies$ | async as candidateClassifies">
+        <div
+          *ngIf="candidateClassifies.length"
+          class="w-[40%] h-[4px] bg-[#333] rounded justify-self-center"
+        ></div>
+        <div *ngFor="let classify of candidateClassifies" class="flex">
+          <button mat-button class="classify-label-button">
+            {{ classify.label }}
+          </button>
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </ng-container>
     </div>
   </div>
 </ng-template>

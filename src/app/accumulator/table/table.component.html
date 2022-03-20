@@ -1,4 +1,8 @@
-<ng-container *ngIf="displayColumns$ | async as displayColumns">
+<div
+  *ngIf="displayColumns$ | async as displayColumns"
+  class="grid h-full grid-rows-[auto_1fr]"
+  [class.only-one-column]="onlyOneColumn$ | async"
+>
   <div
     class="table-header-wrapper scrollbar-gutter-stable grid overflow-hidden"
     [class.selectable]="selectable"
@@ -37,4 +41,4 @@
       </span>
     </div>
   </cdk-virtual-scroll-viewport>
-</ng-container>
+</div>

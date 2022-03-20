@@ -1,7 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 import { Classify } from '../model/classify.model';
 import { InputToSubject } from 'src/app/util/input-to-subject';
@@ -13,12 +19,24 @@ import { InputToSubject } from 'src/app/util/input-to-subject';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClassifyComponent {
-  @Input() activeClassify?: Classify | null;
+  activeClassify$ = new BehaviorSubject<Classify | null>(null);
+  @InputToSubject()
+  @Input()
+  activeClassify?: Classify | null;
 
   classifies$ = new BehaviorSubject<Classify[]>([]);
   @InputToSubject()
   @Input()
   classifies: Classify[] | null = [];
+
+  candidateClassifies$ = combineLatest([
+    this.activeClassify$,
+    this.classifies$,
+  ]).pipe(
+    map(([activeClassify, classifies]) =>
+      classifies.filter((classify) => classify !== activeClassify)
+    )
+  );
 
   isOpen = false;
 
@@ -26,6 +44,10 @@ export class ClassifyComponent {
   filterIcon$ = this.filterOn$.pipe(
     map((on) => (on ? 'filter_list' : 'filter_list_off'))
   );
+
+  filterText$ = new BehaviorSubject('');
+
+  @Output() addClassify = new EventEmitter<void>();
 
   toggleFilter() {
     this.filterOn$.next(!this.filterOn$.getValue());
@@ -42,5 +64,10 @@ export class ClassifyComponent {
 
   overlayDetach() {
     this.isOpen = false;
+  }
+
+  updateFilterCondition(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.filterText$.next(target.value);
   }
 }

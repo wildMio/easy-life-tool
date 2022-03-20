@@ -177,4 +177,14 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  addClassify() {
+    const classifyCode = uuid();
+    const classify = { label: '新分類', classifyCode };
+    this.idbService.addClassify(classify).subscribe({
+      next: () => {
+        this.classifies$.next([...this.classifies$.getValue(), classify]);
+      },
+    });
+  }
 }

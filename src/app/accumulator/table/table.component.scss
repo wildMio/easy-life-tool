@@ -20,3 +20,10 @@
     padding: 0 0.5rem;
   }
 }
+
+.only-one-column {
+  .table-header-wrapper,
+  .row {
+    justify-items: center;
+  }
+}

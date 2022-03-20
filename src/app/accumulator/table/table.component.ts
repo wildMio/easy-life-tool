@@ -2,7 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
-  HostBinding,
   Output,
   OnDestroy,
 } from '@angular/core';
@@ -21,8 +20,6 @@ import { AccumulatorRecord } from '../model/record.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnDestroy {
-  @HostBinding('class') class = 'grid h-full grid-rows-[auto_1fr]';
-
   private readonly destroy$ = new Subject<void>();
 
   readonly records$ = new BehaviorSubject<AccumulatorRecord[] | null>([]);
@@ -38,6 +35,9 @@ export class TableComponent implements OnDestroy {
   readonly columns$ = new BehaviorSubject<Column[]>([]);
   displayColumns$ = this.columns$.pipe(
     map((columns) => columns.filter((column) => column.visible))
+  );
+  onlyOneColumn$ = this.displayColumns$.pipe(
+    map((columns) => columns.length === 1)
   );
   @Input() get columns(): Column[] {
     return this._columns;
