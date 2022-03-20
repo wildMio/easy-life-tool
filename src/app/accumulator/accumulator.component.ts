@@ -30,7 +30,7 @@ import { AccumulatorIdbService } from './service/accumulator-idb.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccumulatorComponent implements OnInit, OnDestroy {
-  @HostBinding('class') class = 'grid height-100';
+  @HostBinding('class') class = 'grid grid-rows-[auto_auto_1fr] h-full';
 
   columns: Column[] = [
     {

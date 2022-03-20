@@ -1,5 +1,5 @@
-:host {
-  grid-template-rows: auto 1fr;
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
 }
 
 .table-header-wrapper,
@@ -17,7 +17,6 @@
   span {
     display: inline-flex;
     align-items: center;
-    box-sizing: border-box;
     padding: 0 0.5rem;
   }
 }

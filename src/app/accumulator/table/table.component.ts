@@ -20,7 +20,7 @@ import { AccumulatorRecord } from '../model/record.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements OnDestroy {
-  @HostBinding('class') class = 'grid height-100';
+  @HostBinding('class') class = 'grid h-full grid-rows-[auto_1fr]';
 
   private readonly destroy$ = new Subject<void>();
 

@@ -14,20 +14,28 @@
   (overlayOutsideClick)="overlayOutsideClick($event, classifyButton)"
   (detach)="overlayDetach()"
 >
-  <div class="overlay-container" cdkTrapFocus cdkTrapFocusAutoCapture>
-    <div class="position-relative">
+  <div
+    class="p-2.5 bg-white rounded border border-[#ccc]"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+  >
+    <div class="relative">
       <input
         type="text"
         name="search"
-        class="search-input"
-        placeholder="搜尋"
+        class="search-input border border-black"
+        placeholder="過濾"
         cdkFocusInitial
       />
-      <button type="button" class="search-button position-absolute">
-        <mat-icon class="search-icon">search</mat-icon>
+      <button
+        type="button"
+        class="h-full flex items-center absolute top-0 right-0 cursor-pointer border-0 border-l border-l-black bg-transparent p-0 outline-0"
+        (click)="toggleFilter()"
+      >
+        <mat-icon class="search-icon">{{ filterIcon$ | async }}</mat-icon>
       </button>
     </div>
-    <div>
+    <div class="grid gap-2">
       <div *ngFor="let classify of classifies">
         {{ classify.label }}
       </div>

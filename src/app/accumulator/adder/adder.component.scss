@@ -1,17 +1,5 @@
 $iconSize: 18px;
 
-.trigger-wrapper {
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.overlay-container {
-  border: solid 1px #ccc;
-  border-radius: 5px;
-  background: #fff;
-  padding: 10px;
-}
-
 .operator-icon {
   width: $iconSize;
   height: $iconSize;
@@ -22,14 +10,7 @@ $iconSize: 18px;
 }
 
 .current-input {
-  font-size: 1rem;
-  border: 1px solid;
   padding-left: $iconSize;
-}
-
-.number-panel {
-  grid-template-columns: repeat(3, auto);
-  margin: 0.5rem 0;
 }
 
 .backspace-icon {
@@ -37,8 +18,4 @@ $iconSize: 18px;
   width: $iconSize;
   height: $iconSize;
   line-height: $iconSize;
-}
-
-.detail-title {
-  justify-content: center;
 }

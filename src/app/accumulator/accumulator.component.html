@@ -1,19 +1,25 @@
-<div class="total-section flex-center border-box">{{ total$ | async }}</div>
-<div class="action-container border-box grid items-center">
+<div class="total-section flex justify-center items-center p-4 text-3xl">
+  {{ total$ | async }}
+</div>
+<div class="action-container grid grid-cols-3 p-4 items-center">
   <app-classify
     [activeClassify]="activeClassify$ | async"
     [classifies]="classifies$ | async"
   ></app-classify>
-  <app-adder class="adder" (add)="addRecord($event)"></app-adder>
-  <app-tuner
-    class="tuner"
-    [(columns)]="columns"
-    [(selectable)]="selectable"
-  ></app-tuner>
-  <div *ngIf="selectable">
-    <button mat-icon-button (click)="deleteSelectedRecords()">
+  <app-adder class="justify-self-center" (add)="addRecord($event)"></app-adder>
+  <div class="justify-self-end flex gap-2">
+    <button
+      *ngIf="selectable"
+      mat-icon-button
+      (click)="deleteSelectedRecords()"
+    >
       <mat-icon>delete_forever</mat-icon>
     </button>
+    <app-tuner
+      class="tuner"
+      [(columns)]="columns"
+      [(selectable)]="selectable"
+    ></app-tuner>
   </div>
 </div>
 <app-table

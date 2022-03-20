@@ -14,9 +14,9 @@
   (overlayOutsideClick)="overlayOutsideClick($event, tuneButton)"
   (detach)="overlayDetach()"
 >
-  <div class="overlay-container">
+  <div class="border border-[#ccc] rounded bg-white p-2.5">
     <div>欄位設定:</div>
-    <div class="box flex justify-between items-center">
+    <div class="flex justify-between items-center text-sm py-1">
       <mat-checkbox
         color="warn"
         [checked]="selectable"
@@ -32,7 +32,7 @@
     >
       <div
         *ngFor="let column of columns"
-        class="box flex justify-between items-center"
+        class="flex justify-between items-center text-sm py-1"
         cdkDrag
         cdkDragLockAxis="y"
         [cdkDragBoundary]="dropContainer"
@@ -43,7 +43,7 @@
           (change)="changeVisible($event, column)"
           >{{ column.headerName }}</mat-checkbox
         >
-        <mat-icon cdkDragHandle class="swap-icon">swap_vert</mat-icon>
+        <mat-icon cdkDragHandle class="cursor-grab ml-2">swap_vert</mat-icon>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
-  class="trigger-wrapper flex justify-center"
+  class="flex justify-center flex-wrap gap-4"
 >
   <button #addButton mat-icon-button type="button" (click)="openOverlay('add')">
     <mat-icon>add</mat-icon>
@@ -23,7 +23,11 @@
   (overlayOutsideClick)="overlayOutsideClick($event, addButton, removeButton)"
   (detach)="overlayDetach()"
 >
-  <div class="overlay-container" cdkTrapFocus cdkTrapFocusAutoCapture>
+  <div
+    class="overlay-container p-2.5 rounded bg-white border border-[#ccc]"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+  >
     <div class="flex justify-between">
       <button
         mat-icon-button
@@ -37,8 +41,8 @@
         <mat-icon>check</mat-icon>
       </button>
     </div>
-    <div class="position-relative">
-      <mat-icon class="operator-icon user-select-none position-absolute">{{
+    <div class="relative">
+      <mat-icon class="operator-icon select-none absolute">{{
         operator
       }}</mat-icon>
       <input
@@ -47,13 +51,13 @@
         name="number"
         pattern="[0-9]*"
         inputmode="numeric"
-        class="current-input border-box width-100"
+        class="current-input w-full border border-black"
         [value]="currentValue"
         (keydown)="inputKeydown($event)"
         (input)="inputValue($any($event), numberInput.value)"
       />
     </div>
-    <div class="number-panel grid">
+    <div class="grid grid-cols-3 my-2">
       <button
         *ngFor="let number of numbers"
         mat-stroked-button
@@ -71,7 +75,7 @@
     <mat-accordion>
       <mat-expansion-panel (expandedChange)="toggleDetail($event)">
         <mat-expansion-panel-header>
-          <mat-panel-title class="detail-title">進階</mat-panel-title>
+          <mat-panel-title class="justify-center">進階</mat-panel-title>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
           <div>
