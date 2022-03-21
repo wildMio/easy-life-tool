@@ -15,7 +15,7 @@
   (detach)="overlayDetach()"
 >
   <div
-    class="p-2.5 bg-white rounded border border-[#ccc] grid gap-2"
+    class="p-2.5 bg-white rounded border border-[#ccc] grid gap-2 w-[300px]"
     cdkTrapFocus
     cdkTrapFocusAutoCapture
   >
@@ -29,7 +29,7 @@
       <input
         type="text"
         name="search"
-        class="search-input border border-black"
+        class="search-input border border-black w-full"
         placeholder="過濾"
         (input)="updateFilterCondition($event)"
       />
@@ -42,26 +42,65 @@
       </button>
     </div>
     <div class="grid gap-2">
-      <div *ngIf="activeClassify" class="flex">
-        <button mat-button color="primary" class="classify-label-button">
-          {{ activeClassify.label }}
-        </button>
-        <button mat-icon-button>
-          <mat-icon>edit</mat-icon>
-        </button>
+      <div *ngIf="activeClassify" class="flex overflow-hidden">
+        <ng-container
+          *ngIf="activeClassify | classifyEditState | async; else labelMode"
+        >
+          <input
+            #labelInput
+            type="text"
+            [value]="activeClassify.label"
+            class="p-1 w-full"
+          />
+          <button
+            mat-icon-button
+            (click)="updateClassifyLabel(activeClassify, labelInput.value)"
+          >
+            <mat-icon>done</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #labelMode>
+          <button mat-button color="primary" class="classify-label-button">
+            {{ activeClassify.label }}
+          </button>
+          <button mat-icon-button (click)="changeToEditState(activeClassify)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </ng-template>
       </div>
       <ng-container *ngIf="candidateClassifies$ | async as candidateClassifies">
         <div
           *ngIf="candidateClassifies.length"
           class="w-[40%] h-[4px] bg-[#333] rounded justify-self-center"
         ></div>
-        <div *ngFor="let classify of candidateClassifies" class="flex">
-          <button mat-button class="classify-label-button">
-            {{ classify.label }}
-          </button>
-          <button mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
+        <div
+          *ngFor="let classify of candidateClassifies"
+          class="flex overflow-hidden"
+        >
+          <ng-container
+            *ngIf="classify | classifyEditState | async; else labelMode"
+          >
+            <input
+              #labelInput
+              type="text"
+              [value]="classify.label"
+              class="p-1 w-full"
+            />
+            <button
+              mat-icon-button
+              (click)="updateClassifyLabel(classify, labelInput.value)"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #labelMode>
+            <button mat-button class="classify-label-button">
+              {{ classify.label }}
+            </button>
+            <button mat-icon-button (click)="changeToEditState(classify)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-template>
         </div>
       </ng-container>
     </div>

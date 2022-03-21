@@ -6,6 +6,7 @@
     [activeClassify]="activeClassify$ | async"
     [classifies]="classifies$ | async"
     (addClassify)="addClassify()"
+    (updateClassify)="updateClassify($event)"
   ></app-classify>
   <app-adder class="justify-self-center" (add)="addRecord($event)"></app-adder>
   <div class="justify-self-end flex gap-2">

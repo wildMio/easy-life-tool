@@ -92,6 +92,10 @@ export class AccumulatorIdbService {
     return this.wrapAction((db) => db.add('classifies', classify));
   }
 
+  updateClassify(classify: Classify) {
+    return this.wrapAction((db) => db.put('classifies', classify));
+  }
+
   getClassifies() {
     return this.wrapAction((db) => db.getAllFromIndex('classifies', 'by-id'));
   }

@@ -10,6 +10,7 @@ import { MatButton } from '@angular/material/button';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 import { Classify } from '../model/classify.model';
+import { ClassifyEditStateService } from './classify-edit-state.service';
 import { InputToSubject } from 'src/app/util/input-to-subject';
 
 @Component({
@@ -17,6 +18,7 @@ import { InputToSubject } from 'src/app/util/input-to-subject';
   templateUrl: './classify.component.html',
   styleUrls: ['./classify.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ClassifyEditStateService],
 })
 export class ClassifyComponent {
   activeClassify$ = new BehaviorSubject<Classify | null>(null);
@@ -48,6 +50,9 @@ export class ClassifyComponent {
   filterText$ = new BehaviorSubject('');
 
   @Output() addClassify = new EventEmitter<void>();
+  @Output() updateClassify = new EventEmitter<Classify>();
+
+  constructor(private classifyEditStateService: ClassifyEditStateService) {}
 
   toggleFilter() {
     this.filterOn$.next(!this.filterOn$.getValue());
@@ -69,5 +74,13 @@ export class ClassifyComponent {
   updateFilterCondition(event: Event) {
     const target = event.target as HTMLInputElement;
     this.filterText$.next(target.value);
+  }
+
+  changeToEditState(classify: Classify) {
+    this.classifyEditStateService.updateEditState(classify, true);
+  }
+
+  updateClassifyLabel(classify: Classify, value: string) {
+    this.updateClassify.emit({ ...classify, label: value });
   }
 }

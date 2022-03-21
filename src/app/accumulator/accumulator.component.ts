@@ -182,8 +182,22 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
     const classifyCode = uuid();
     const classify = { label: '新分類', classifyCode };
     this.idbService.addClassify(classify).subscribe({
-      next: () => {
-        this.classifies$.next([...this.classifies$.getValue(), classify]);
+      next: (id) => {
+        this.classifies$.next([
+          ...this.classifies$.getValue(),
+          { ...classify, id },
+        ]);
+      },
+    });
+  }
+
+  updateClassify(classify: Classify) {
+    this.idbService.updateClassify(classify).subscribe({
+      next: (updateId) => {
+        const classifies = [...this.classifies$.getValue()];
+        const targetIndex = classifies.findIndex(({ id }) => id === updateId);
+        classifies.splice(targetIndex, 1, classify);
+        this.classifies$.next(classifies);
       },
     });
   }

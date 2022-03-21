@@ -19,6 +19,7 @@ import { ClassifyComponent } from './classify/classify.component';
 import { ValueGetterPipe } from './table/pipe/value-getter.pipe';
 import { TableComponent } from './table/table.component';
 import { TunerComponent } from './tuner/tuner.component';
+import { ClassifyEditStatePipe } from './classify/classify-edit-state.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TunerComponent } from './tuner/tuner.component';
     TunerComponent,
     TableComponent,
     ValueGetterPipe,
+    ClassifyEditStatePipe,
   ],
   imports: [
     CommonModule,
