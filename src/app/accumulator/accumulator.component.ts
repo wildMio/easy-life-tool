@@ -7,15 +7,7 @@ import {
 } from '@angular/core';
 
 import { BehaviorSubject, combineLatest, forkJoin, of, Subject } from 'rxjs';
-import {
-  auditTime,
-  concatMap,
-  concatMapTo,
-  map,
-  mapTo,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
+import { auditTime, concatMap, map, takeUntil, tap } from 'rxjs/operators';
 
 import { uuid } from '../util/uuid';
 import { Classify } from './model/classify.model';
@@ -100,19 +92,19 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
             return forkJoin([
               this.idbService.addClassify(classify),
               this.idbService.changeActiveClassify(classifyCode),
-            ]).pipe(mapTo([classify]));
+            ]).pipe(map(() => [classify]));
           }
           return of(classifies);
         }),
         tap((classifies) => this.classifies$.next(classifies)),
-        concatMapTo(this.idbService.getActiveClassifyCode()),
+        concatMap(() => this.idbService.getActiveClassifyCode()),
         tap((activeClassifyCode) => {
           this.activeClassifyCode$.next(activeClassifyCode ?? '');
         }),
         concatMap((activeClassifyCode) =>
           this.idbService.getTotalByClassifyCode(activeClassifyCode).pipe(
             tap((total) => this.total$.next(total ?? 0)),
-            mapTo(activeClassifyCode)
+            map(() => activeClassifyCode)
           )
         ),
         concatMap((activeClassifyCode) =>
@@ -198,6 +190,25 @@ export class AccumulatorComponent implements OnInit, OnDestroy {
         const targetIndex = classifies.findIndex(({ id }) => id === updateId);
         classifies.splice(targetIndex, 1, classify);
         this.classifies$.next(classifies);
+      },
+    });
+  }
+
+  changeActiveClassify(classify: Classify) {
+    const { classifyCode } = classify;
+    forkJoin([
+      this.idbService.changeActiveClassify(classifyCode),
+      this.idbService.getTotalByClassifyCode(classifyCode),
+      this.idbService.getAccumulatorRecords(),
+    ]).subscribe({
+      next: ([, total, accumulatorRecords]) => {
+        this.activeClassifyCode$.next(classifyCode);
+        this.total$.next(total ?? 0);
+
+        const records = accumulatorRecords
+          .filter((record) => record.classifyCode === classifyCode)
+          .reverse();
+        this.records$.next(records);
       },
     });
   }

@@ -15,7 +15,7 @@
   (detach)="overlayDetach()"
 >
   <div
-    class="p-2.5 bg-white rounded border border-[#ccc] grid gap-2 w-[300px]"
+    class="p-2.5 bg-white rounded border border-[#ccc] grid gap-2 w-[300px] overflow-auto max-h-[80vh]"
     cdkTrapFocus
     cdkTrapFocusAutoCapture
   >
@@ -85,6 +85,7 @@
               type="text"
               [value]="classify.label"
               class="p-1 w-full"
+              (keydown.enter)="updateClassifyLabel(classify, labelInput.value)"
             />
             <button
               mat-icon-button
@@ -94,7 +95,11 @@
             </button>
           </ng-container>
           <ng-template #labelMode>
-            <button mat-button class="classify-label-button">
+            <button
+              mat-button
+              class="classify-label-button"
+              (click)="changeActiveClassify.emit(classify); isOpen = false"
+            >
               {{ classify.label }}
             </button>
             <button mat-icon-button (click)="changeToEditState(classify)">

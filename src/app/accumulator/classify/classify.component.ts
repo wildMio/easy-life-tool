@@ -7,7 +7,13 @@ import {
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
-import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  map,
+  startWith,
+} from 'rxjs';
 
 import { Classify } from '../model/classify.model';
 import { ClassifyEditStateService } from './classify-edit-state.service';
@@ -21,6 +27,8 @@ import { InputToSubject } from 'src/app/util/input-to-subject';
   providers: [ClassifyEditStateService],
 })
 export class ClassifyComponent {
+  filterText$ = new BehaviorSubject('');
+
   activeClassify$ = new BehaviorSubject<Classify | null>(null);
   @InputToSubject()
   @Input()
@@ -34,10 +42,22 @@ export class ClassifyComponent {
   candidateClassifies$ = combineLatest([
     this.activeClassify$,
     this.classifies$,
+    this.filterText$.pipe(
+      debounceTime(300),
+      startWith(this.filterText$.getValue())
+    ),
   ]).pipe(
-    map(([activeClassify, classifies]) =>
-      classifies.filter((classify) => classify !== activeClassify)
-    )
+    map(([activeClassify, classifies, filterText]) => {
+      const result = classifies.filter(
+        (classify) => classify !== activeClassify
+      );
+      const lowerText = filterText.toLowerCase();
+      return filterText === ''
+        ? result
+        : result.filter((classify) =>
+            classify.label.toLowerCase().includes(lowerText)
+          );
+    })
   );
 
   isOpen = false;
@@ -47,10 +67,9 @@ export class ClassifyComponent {
     map((on) => (on ? 'filter_list' : 'filter_list_off'))
   );
 
-  filterText$ = new BehaviorSubject('');
-
   @Output() addClassify = new EventEmitter<void>();
   @Output() updateClassify = new EventEmitter<Classify>();
+  @Output() changeActiveClassify = new EventEmitter<Classify>();
 
   constructor(private classifyEditStateService: ClassifyEditStateService) {}
 
