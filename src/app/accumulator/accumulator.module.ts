@@ -15,11 +15,11 @@ import { ExistModule } from '../pipe/exist/exist.module';
 import { AccumulatorRoutingModule } from './accumulator-routing.module';
 import { AccumulatorComponent } from './accumulator.component';
 import { AdderComponent } from './adder/adder.component';
+import { ClassifyEditStatePipe } from './classify/classify-edit-state.pipe';
 import { ClassifyComponent } from './classify/classify.component';
 import { ValueGetterPipe } from './table/pipe/value-getter.pipe';
 import { TableComponent } from './table/table.component';
 import { TunerComponent } from './tuner/tuner.component';
-import { ClassifyEditStatePipe } from './classify/classify-edit-state.pipe';
 
 @NgModule({
   declarations: [

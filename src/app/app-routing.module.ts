@@ -14,6 +14,7 @@ const routes: Routes = [
         (m) => m.AccumulatorModule
       ),
   },
+  { path: 'spreadsheet', loadChildren: () => import('./spreadsheet/spreadsheet.module').then(m => m.SpreadsheetModule) },
   {
     path: '**',
     redirectTo: 'dashboard',

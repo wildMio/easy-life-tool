@@ -1,0 +1,22 @@
+<div class="p-4 flex items-center gap-2">
+  <div class="flex items-center gap-1">
+    <span>列</span>
+    <button mat-icon-button (click)="newRow()">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+    <button mat-icon-button (click)="removeSelectedRow()">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+  </div>
+  <div class="w-[2px] h-[60%] bg-black rounded opacity-50"></div>
+  <div class="flex items-center gap-1">
+    <span>欄</span>
+    <button mat-icon-button><mat-icon>add_circle_outline</mat-icon></button>
+    <button mat-icon-button><mat-icon>remove_circle_outline</mat-icon></button>
+  </div>
+</div>
+<app-spreadsheet-table
+  [columnDefs]="columnDefs"
+  [rowData]="rowData"
+  (gridReady)="gridReady($event)"
+></app-spreadsheet-table>
