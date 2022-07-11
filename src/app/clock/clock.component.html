@@ -1,0 +1,38 @@
+<div class="circle">
+  <div class="circle-line"></div>
+  <div class="ping hour" [style.--ping-rotate]="hourDeg$ | async"></div>
+  <div class="ping minute" [style.--ping-rotate]="minuteDeg$ | async"></div>
+  <div class="ping second" [style.--ping-rotate]="secondDeg$ | async"></div>
+  <div class="center-point"></div>
+  <ul>
+    <li *ngFor="let number of numbers" [style.--number-rotate]="number.rotate">
+      <span
+        class="number-label"
+        [style.--number-label-rotate]="number.labelRotate"
+      >
+        {{ number.index }}
+      </span>
+    </li>
+  </ul>
+
+  <ul>
+    <li
+      *ngFor="let step of steps"
+      class="step"
+      [style.--number-rotate]="step.rotate"
+      [class.opacity-0]="step.hidden"
+    ></li>
+  </ul>
+</div>
+
+<div>{{ hour$ | async }} : {{ minute$ | async }} : {{ second$ | async }}</div>
+
+<button *ngIf="wakable$ | async" class="button" (click)="lockScreen()">
+  Screen Wake Lock
+</button>
+
+<div *ngIf="wakeLockError$ | async as errMsg">{{ errMsg }}</div>
+
+<button *ngIf="wakeLock$ | async" class="button" (click)="releaseWakeLock()">
+  Release Wake Lock
+</button>

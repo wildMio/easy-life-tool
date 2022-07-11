@@ -1,0 +1,117 @@
+:host {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.circle {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-line {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 1px solid #222;
+}
+
+.hour {
+  width: 6px;
+  height: 55px;
+  background-color: #000;
+}
+
+.minute {
+  width: 4px;
+  height: 80px;
+  background-color: #333;
+}
+
+.second {
+  width: 2px;
+  height: 110px;
+  background-color: #aaa;
+}
+
+.ping {
+  position: absolute;
+  transform-origin: bottom;
+  transform: translateY(-50%) rotate(var(--ping-rotate));
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.center-point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform-origin: 50% 140px;
+  transform: translateX(-50%) rotate(var(--number-rotate));
+}
+
+.number-label {
+  transform: rotate(var(--number-label-rotate));
+  display: inline-block;
+}
+
+ul li.step {
+  top: 15px;
+  transform-origin: 50% 135px;
+  width: 2px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #ccc;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.button {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+  opacity: 0;
+}
+
+.button:hover::after {
+  opacity: 0.08;
+}
+
+.button:focus::after {
+  opacity: 0.12;
+}
+
+.button:active::after {
+  opacity: 0.2;
+}

@@ -14,7 +14,18 @@ const routes: Routes = [
         (m) => m.AccumulatorModule
       ),
   },
-  { path: 'spreadsheet', loadChildren: () => import('./spreadsheet/spreadsheet.module').then(m => m.SpreadsheetModule) },
+  {
+    path: 'spreadsheet',
+    loadChildren: () =>
+      import('./spreadsheet/spreadsheet.module').then(
+        (m) => m.SpreadsheetModule
+      ),
+  },
+  {
+    path: 'clock',
+    loadChildren: () =>
+      import('./clock/clock.module').then((m) => m.ClockModule),
+  },
   {
     path: '**',
     redirectTo: 'dashboard',
