@@ -4,11 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TitleStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CustomTitleStrategyService } from './service/custom-title-strategy.service';
 import { IDB_VERSION_TOKEN } from './service/idb-version.token';
 
 @NgModule({
@@ -27,7 +29,10 @@ import { IDB_VERSION_TOKEN } from './service/idb-version.token';
     MatIconModule,
     MatButtonModule,
   ],
-  providers: [{ provide: IDB_VERSION_TOKEN, useValue: 1 }],
+  providers: [
+    { provide: IDB_VERSION_TOKEN, useValue: 1 },
+    { provide: TitleStrategy, useClass: CustomTitleStrategyService },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

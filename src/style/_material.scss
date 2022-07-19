@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -33,3 +33,13 @@ $easy-life-tool-theme: mat.define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($easy-life-tool-theme);
+
+.slightly-backdrop {
+  background-color: rgba($color: #000000, $alpha: 0.06);
+}
+
+.mat-icon.small-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}

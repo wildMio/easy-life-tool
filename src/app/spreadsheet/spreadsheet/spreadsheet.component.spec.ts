@@ -8,12 +8,10 @@ describe('SpreadsheetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SpreadsheetComponent ]
+      imports: [ SpreadsheetComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(SpreadsheetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

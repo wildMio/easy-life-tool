@@ -1,9 +1,23 @@
-import { Component, ChangeDetectionStrategy, HostBinding } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
+import { AgGridModule } from 'ag-grid-angular';
 import { ColDef, ColumnApi, GridApi, GridReadyEvent } from 'ag-grid-community';
+
+import { SpreadsheetTableComponent } from '../spreadsheet-table/spreadsheet-table.component';
 
 @Component({
   selector: 'app-spreadsheet',
+  standalone: true,
+  imports: [
+    CommonModule,
+    AgGridModule,
+    MatButtonModule,
+    MatIconModule,
+    SpreadsheetTableComponent,
+  ],
   templateUrl: './spreadsheet.component.html',
   styleUrls: ['./spreadsheet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

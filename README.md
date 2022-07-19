@@ -27,6 +27,8 @@
 - EasyLifeTools:
   - 功能:
     - 累加器
+    - 時鐘
+    - 紀錄表格
   - website: <https://easy-life-tools.web.app/dashboard>
   - github: <https://github.com/wildMio/easy-life-tool>
 - EasyDraw:

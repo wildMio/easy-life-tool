@@ -1,0 +1,35 @@
+<div class="control-container">
+  <button mat-stroked-button>新增列表</button>
+</div>
+
+<section
+  class="list-container grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] p-4 gap-2 overflow-auto"
+>
+  <div
+    *ngFor="let classify of classifies"
+    class="grid rounded bg-[#ddd] p-2 gap-1 relative"
+  >
+    <div class="flex items-center">
+      <mat-icon class="small-icon opacity-50 mr-1">title</mat-icon
+      >{{ classify.title }}
+    </div>
+    <div class="flex items-center">
+      <mat-icon class="small-icon opacity-50 mr-1">schedule</mat-icon
+      >{{ classify.updateTime | date: "medium" }}
+    </div>
+    <a
+      [routerLink]="[classify.id]"
+      class="absolute inset-0 opacity-0 bg-[#555] focus:opacity-[.08] hover:opacity-[.12] active:opacity-[.18]"
+    ></a>
+    <div class="ml-auto">
+      <button
+        mat-icon-button
+        matTooltip="刪除此表單"
+        color="warn"
+        (click)="confirmDelete(classify)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</section>

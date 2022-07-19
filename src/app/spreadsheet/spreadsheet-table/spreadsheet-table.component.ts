@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -7,6 +8,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import { AgGridModule } from 'ag-grid-angular';
 import { ColDef, ColumnApi, GridApi, GridReadyEvent } from 'ag-grid-community';
 
 @Component({
@@ -14,6 +16,8 @@ import { ColDef, ColumnApi, GridApi, GridReadyEvent } from 'ag-grid-community';
   templateUrl: './spreadsheet-table.component.html',
   styleUrls: ['./spreadsheet-table.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [CommonModule, AgGridModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpreadsheetTableComponent {
