@@ -7,7 +7,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 
 import { SpreadsheetClassify } from '../model/spreadsheet-classify';
-import { SpreadsheetDeleteDialogComponent } from '../spreadsheet-delete-dialog/spreadsheet-delete-dialog.component';
+import {
+  SpreadsheetDeleteDialogComponent,
+  SpreadsheetDeleteDialogResult,
+} from '../spreadsheet-delete-dialog/spreadsheet-delete-dialog.component';
 
 @Component({
   selector: 'app-spreadsheet-container',
@@ -35,9 +38,14 @@ export class SpreadsheetContainerComponent {
   constructor(private readonly dialog: MatDialog) {}
 
   confirmDelete(classify: SpreadsheetClassify) {
-    this.dialog.open(SpreadsheetDeleteDialogComponent, {
+    const dialogRef = this.dialog.open<
+      SpreadsheetDeleteDialogComponent,
+      SpreadsheetClassify,
+      SpreadsheetDeleteDialogResult
+    >(SpreadsheetDeleteDialogComponent, {
       backdropClass: 'slightly-backdrop',
       data: classify,
     });
+    dialogRef.beforeClosed().subscribe(console.log);
   }
 }

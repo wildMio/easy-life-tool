@@ -7,6 +7,11 @@ import {
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import {
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+} from '@angular/router';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 
 import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
@@ -40,9 +45,19 @@ export class AppComponent implements OnInit {
     this.dismissUpdate$,
   ]).pipe(map(([updateAvailable, dismiss]) => updateAvailable && !dismiss));
 
+  loadModuleIndicator$ = this.router.events.pipe(
+    filter(
+      (event) =>
+        event instanceof RouteConfigLoadStart ||
+        event instanceof RouteConfigLoadEnd
+    ),
+    map((event) => event instanceof RouteConfigLoadStart)
+  );
+
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly swUpdate: SwUpdate,
+    private readonly router: Router,
     private readonly matIconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,
     private readonly appPwaService: AppPwaService

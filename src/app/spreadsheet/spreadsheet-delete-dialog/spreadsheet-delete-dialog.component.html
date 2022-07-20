@@ -1,6 +1,6 @@
+<h1 mat-dialog-title>你確定要將此表單刪除嗎?</h1>
 <div mat-dialog-content>
   <div class="grid gap-2">
-    <p>你確定要將此表單刪除嗎?</p>
     <p class="flex items-center">
       <mat-icon class="small-icon opacity-50 mr-1">title</mat-icon
       >{{ data.title }}
@@ -14,7 +14,7 @@
 <div mat-dialog-actions class="justify-end">
   <button
     mat-button
-    [mat-dialog-close]="{ classify: data, action: 'cancel' }"
+    [mat-dialog-close]="{ item: data, action: 'cancel' }"
     cdkFocusInitial
   >
     取消
@@ -22,7 +22,7 @@
   <button
     mat-button
     color="warn"
-    [mat-dialog-close]="{ classify: data, action: 'delete' }"
+    [mat-dialog-close]="{ item: data, action: 'delete' }"
     cdkFocusInitial
   >
     確認

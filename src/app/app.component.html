@@ -19,3 +19,8 @@
   <button mat-flat-button color="primary" (click)="reloadPage()">更新</button>
   <button mat-flat-button color="warn" (click)="dismissUpdate()">忽略</button>
 </div>
+
+<div
+  *ngIf="loadModuleIndicator$ | async"
+  class="loading-indicator fixed top-0 w-full"
+></div>

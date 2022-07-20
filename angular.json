@@ -55,8 +55,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "2kb"
                 }
               ],
               "fileReplacements": [
@@ -125,9 +124,5 @@
         }
       }
     }
-  },
-  "defaultProject": "easy-life-tool",
-  "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
   }
 }

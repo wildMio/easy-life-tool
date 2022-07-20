@@ -6,6 +6,9 @@ import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import { SpreadsheetClassify } from '../model/spreadsheet-classify';
+import { Action } from 'src/app/model/action';
+
+export type SpreadsheetDeleteDialogResult = Action<SpreadsheetClassify>;
 
 @Component({
   selector: 'app-spreadsheet-delete-dialog',
