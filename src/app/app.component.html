@@ -1,15 +1,74 @@
 <router-outlet></router-outlet>
 
-<button
-  *ngIf="showInstallPromotion$ | async"
-  mat-icon-button
-  (click)="installPromotion()"
-  matTooltip="安裝"
-  matTooltipPosition="left"
-  class="install-button top-0 right-0 opacity-70 hover:opacity-100 focus:opacity-100"
->
-  <mat-icon>install_desktop</mat-icon>
-</button>
+<div class="fixed right-0 bottom-0 pr-2 pb-2" [class.opened]="toolOpened">
+  <nav
+    class="nav-wrapper absolute top-0 right-0 origin-bottom-right transition-transform grid gap-2"
+    [class.pointer-events-none]="!toolOpened"
+  >
+    <a
+      mat-icon-button
+      [tabindex]="controlTabindex"
+      routerLink="/accumulator"
+      matTooltip="累加器"
+      matTooltipPosition="left"
+      class="opacity-70 hover:opacity-100 focus:opacity-100"
+    >
+      <mat-icon>functions</mat-icon></a
+    >
+    <a
+      mat-icon-button
+      [tabindex]="controlTabindex"
+      routerLink="/clock"
+      matTooltip="時鐘"
+      matTooltipPosition="left"
+      class="opacity-70 hover:opacity-100 focus:opacity-100"
+    >
+      <mat-icon>schedule</mat-icon></a
+    >
+    <a
+      mat-icon-button
+      [tabindex]="controlTabindex"
+      routerLink="/spreadsheet"
+      matTooltip="紀錄表格"
+      matTooltipPosition="left"
+      class="opacity-70 hover:opacity-100 focus:opacity-100"
+    >
+      <mat-icon>ballot</mat-icon></a
+    >
+  </nav>
+  <div
+    class="tool-wrapper flex gap-2 absolute left-0 bottom-0 origin-bottom-right transition-transform"
+    [class.pointer-events-none]="!toolOpened"
+  >
+    <button
+      *ngIf="showInstallPromotion$ | async"
+      mat-icon-button
+      (click)="installPromotion()"
+      [tabindex]="controlTabindex"
+      matTooltip="安裝"
+      class="opacity-70 hover:opacity-100 focus:opacity-100"
+    >
+      <mat-icon>install_desktop</mat-icon>
+    </button>
+    <button
+      *ngIf="swUpdateAvailable$ | async"
+      mat-icon-button
+      (click)="reloadPage()"
+      [tabindex]="controlTabindex"
+      matTooltip="更新"
+      class="opacity-70 hover:opacity-100 focus:opacity-100"
+    >
+      <mat-icon>tips_and_updates</mat-icon>
+    </button>
+  </div>
+  <button
+    class="w-8 h-8 flex justify-center items-center border rounded-full border-slate-600 outline outline-0 outline-slate-600 outline-offset-2 active:outline-1 focus:outline-1 active:outline-offset-1 opacity-70 hover:opacity-100 focus:opacity-100"
+    [class.outline-1]="toolOpened"
+    (click)="toggleTool()"
+  >
+    <mat-icon>group_work</mat-icon>
+  </button>
+</div>
 
 <div
   *ngIf="showUpdatePanel$ | async"

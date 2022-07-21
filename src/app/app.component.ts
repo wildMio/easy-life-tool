@@ -54,6 +54,9 @@ export class AppComponent implements OnInit {
     map((event) => event instanceof RouteConfigLoadStart)
   );
 
+  toolOpened = false;
+  controlTabindex = -1;
+
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly swUpdate: SwUpdate,
@@ -85,5 +88,10 @@ export class AppComponent implements OnInit {
 
   dismissUpdate() {
     this.dismissUpdate$.next(true);
+  }
+
+  toggleTool() {
+    this.toolOpened = !this.toolOpened;
+    this.controlTabindex = this.toolOpened ? 0 : -1;
   }
 }

@@ -1,7 +1,3 @@
-.install-button {
-  position: absolute;
-}
-
 .mi-end-auto {
   margin-inline-end: auto;
 }
@@ -30,5 +26,21 @@
   }
   100% {
     transform: translate(170%) scaleX(0.3);
+  }
+}
+
+.nav-wrapper {
+  transform: translateY(-100%) scale(0.4);
+
+  .opened & {
+    transform: translateY(-110%) scale(1);
+  }
+}
+
+.tool-wrapper {
+  transform: translateX(-100%) scale(0.4);
+
+  .opened & {
+    transform: translateX(-110%) scale(1);
   }
 }
