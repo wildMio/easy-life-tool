@@ -12,9 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomTitleStrategyService } from './service/custom-title-strategy.service';
 import { IDB_VERSION_TOKEN } from './service/idb-version.token';
+import { ToolBarComponent } from './tool-bar/tool-bar.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ToolBarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
