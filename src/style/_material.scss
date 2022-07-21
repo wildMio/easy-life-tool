@@ -43,3 +43,9 @@ $easy-life-tool-theme: mat.define-light-theme(
   height: 16px;
   font-size: 16px;
 }
+
+.mat-button-toggle.mat-button-toggle-appearance-standard
+  .mat-button-toggle-label-content {
+  padding: 0 4px;
+  line-height: 36px;
+}

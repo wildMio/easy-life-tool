@@ -1,12 +1,55 @@
-<div class="control-container">
-  <button mat-stroked-button>新增列表</button>
+<div class="control-container p-4 flex">
+  <button mat-stroked-button color="primary">
+    <div class="flex items-center gap-1">
+      新增表格 <mat-icon>playlist_add</mat-icon>
+    </div>
+  </button>
+
+  <div class="flex items-center gap-1 ml-auto">
+    依據:
+    <mat-button-toggle-group
+      name="listSorting"
+      aria-label="List Sorting"
+      [value]="sortingType$ | async"
+      (change)="sortingType$.next($event.value)"
+    >
+      <mat-button-toggle value="updateTime" matTooltip="更新時間">
+        <mat-icon>schedule</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="title" matTooltip="標題">
+        <mat-icon>title</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    排序:
+    <mat-button-toggle-group
+      name="listSorting"
+      aria-label="List Sorting"
+      [value]="sorting$ | async"
+      (change)="sorting$.next($event.value)"
+    >
+      <mat-button-toggle
+        value="asc"
+        [matTooltip]="(sortingAscTooltip$ | async)!"
+      >
+        <mat-icon>expand_more</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle
+        value="desc"
+        [matTooltip]="(sortingDescTooltip$ | async)!"
+      >
+        <mat-icon>expand_less</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 </div>
+
+<div class="h-px bg-gray-400"></div>
 
 <section
   class="list-container grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] p-4 gap-2 overflow-auto"
 >
   <div
-    *ngFor="let classify of classifies"
+    *ngFor="let classify of displayClassifies$ | async"
     class="grid rounded bg-[#ddd] p-2 gap-1 relative"
   >
     <div class="flex items-center">
@@ -19,7 +62,7 @@
     </div>
     <a
       [routerLink]="[classify.id]"
-      class="absolute inset-0 opacity-0 bg-[#555] focus:opacity-[.08] hover:opacity-[.12] active:opacity-[.18]"
+      class="absolute inset-0 transition-opacity opacity-0 bg-[#555] focus:opacity-[.08] hover:opacity-[.12] active:opacity-[.18]"
     ></a>
     <div class="ml-auto">
       <button
