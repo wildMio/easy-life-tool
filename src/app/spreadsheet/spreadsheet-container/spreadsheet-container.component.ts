@@ -11,6 +11,10 @@ import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 import { SpreadsheetClassify } from '../model/spreadsheet-classify';
 import {
+  SpreadsheetAddDialogComponent,
+  SpreadsheetAddDialogResult,
+} from '../spreadsheet-add-dialog/spreadsheet-add-dialog.component';
+import {
   SpreadsheetDeleteDialogComponent,
   SpreadsheetDeleteDialogResult,
 } from '../spreadsheet-delete-dialog/spreadsheet-delete-dialog.component';
@@ -30,7 +34,6 @@ export type Sorting = 'asc' | 'desc';
     MatDialogModule,
     MatTooltipModule,
     MatButtonToggleModule,
-    SpreadsheetDeleteDialogComponent,
   ],
   templateUrl: './spreadsheet-container.component.html',
   styleUrls: ['./spreadsheet-container.component.scss'],
@@ -106,6 +109,18 @@ export class SpreadsheetContainerComponent {
       backdropClass: 'slightly-backdrop',
       data: classify,
     });
+    dialogRef.beforeClosed().subscribe(console.log);
+  }
+
+  confirmAdd() {
+    const dialogRef = this.dialog.open<
+      SpreadsheetAddDialogComponent,
+      any,
+      SpreadsheetAddDialogResult
+    >(SpreadsheetAddDialogComponent, {
+      backdropClass: 'slightly-backdrop',
+    });
+
     dialogRef.beforeClosed().subscribe(console.log);
   }
 }

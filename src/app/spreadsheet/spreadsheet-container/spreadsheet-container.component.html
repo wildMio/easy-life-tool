@@ -1,5 +1,5 @@
 <div class="control-container p-4 flex">
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary" (click)="confirmAdd()">
     <div class="flex items-center gap-1">
       新增表格 <mat-icon>playlist_add</mat-icon>
     </div>
@@ -50,21 +50,24 @@
 >
   <div
     *ngFor="let classify of displayClassifies$ | async"
-    class="grid rounded bg-[#ddd] p-2 gap-1 relative"
+    class="grid grid-rows-[auto_auto_1fr] rounded bg-[#ddd] p-2 gap-1 relative"
   >
-    <div class="flex items-center">
-      <mat-icon class="small-icon opacity-50 mr-1">title</mat-icon
-      >{{ classify.title }}
+    <div class="flex items-center overflow-hidden">
+      <mat-icon class="small-icon opacity-50 mr-1 shrink-0">title</mat-icon>
+      <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+        {{ classify.title }}
+      </span>
     </div>
     <div class="flex items-center">
       <mat-icon class="small-icon opacity-50 mr-1">schedule</mat-icon
       >{{ classify.updateTime | date: "medium" }}
     </div>
     <a
+      [title]="classify.title"
       [routerLink]="[classify.id]"
       class="absolute inset-0 transition-opacity opacity-0 bg-[#555] focus:opacity-[.08] hover:opacity-[.12] active:opacity-[.18]"
     ></a>
-    <div class="ml-auto">
+    <div class="mt-auto ml-auto">
       <button
         mat-icon-button
         matTooltip="刪除此表單"

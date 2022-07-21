@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>建立新表格</h1>
+<div mat-dialog-content>
+  <div class="grid gap-2">
+    <label class="flex items-center">
+      <mat-icon class="small-icon opacity-50 mr-1">title</mat-icon>
+      <input
+        #titleInput
+        type="text"
+        placeholder="標題"
+        cdkFocusInitial
+        class="p-1"
+        (input)="title = titleInput.value"
+        (keydown.enter)="confirm()"
+      />
+    </label>
+  </div>
+</div>
+<div mat-dialog-actions class="justify-end">
+  <button mat-button [mat-dialog-close]="{ item: null, action: 'cancel' }">
+    取消
+  </button>
+  <button
+    mat-button
+    color="primary"
+    [mat-dialog-close]="{ item: title, action: 'add' }"
+  >
+    確認
+  </button>
+</div>
