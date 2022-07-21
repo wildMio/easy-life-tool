@@ -30,17 +30,17 @@
 }
 
 .nav-wrapper {
-  transform: translateY(-100%) scale(0.4);
+  transform: translate(0, -100%) scale(0.4);
 
   .opened & {
-    transform: translateY(-110%) scale(1);
+    transform: translate(-10%, -110%) scale(1);
   }
 }
 
 .tool-wrapper {
-  transform: translateX(-100%) scale(0.4);
+  transform: translate(-100%, 0) scale(0.4);
 
   .opened & {
-    transform: translateX(-110%) scale(1);
+    transform: translate(-110%, -10%) scale(1);
   }
 }

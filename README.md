@@ -29,6 +29,7 @@
     - 累加器
     - 時鐘
     - 紀錄表格
+    - 效果收藏區
   - website: <https://easy-life-tools.web.app/dashboard>
   - github: <https://github.com/wildMio/easy-life-tool>
 - EasyDraw:

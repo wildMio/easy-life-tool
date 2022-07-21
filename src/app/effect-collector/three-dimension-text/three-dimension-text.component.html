@@ -1,0 +1,12 @@
+<div class="items-wrapper w-96 h-96 relative">
+  <span
+    *ngFor="let item of items"
+    [style.--offset]="item.offset"
+    class="item absolute inset-0"
+  ></span>
+</div>
+<a
+  href="https://www.youtube.com/watch?v=POWTSH1fG2M"
+  class="absolute right-0 bottom-0 p-2"
+  >Source</a
+>
